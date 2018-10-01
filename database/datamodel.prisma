@@ -1,0 +1,11 @@
+type User {
+  id: ID! @unique
+  name: String!
+  courses: [Course!]!
+}
+
+type Course {
+  id: ID! @unique
+  title: String!
+  owner: User!
+}

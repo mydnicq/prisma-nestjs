@@ -1,0 +1,36 @@
+version: '3.4'
+services:
+  prisma:
+    image: prismagraphql/prisma:1.17
+    restart: always
+    ports:
+      - '4466:4466'
+    environment:
+      PRISMA_CONFIG: |
+        port: 4466
+        databases:
+          default:
+            connector: postgres
+            host: nest-prisma-db
+            port: 5432
+            user: testdbuser
+            password: testdbpass
+            migrations: true
+            database: nestPrismaDB
+  postgres:
+    container_name: 'nest-prisma-db'
+    image: postgres:10.5-alpine
+    command: postgres -c config_file=/etc/postgresql/postgresql.conf
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: testdbuser
+      POSTGRES_PASSWORD: testdbpass
+      POSTGRES_DB: nestPrismaDB
+    volumes:
+      - 'dbdata:/var/lib/postgresql/data'
+      - ./my-postgres.conf:/etc/postgresql/postgresql.conf
+
+volumes:
+  dbdata:
+    name: nestPrismaDB

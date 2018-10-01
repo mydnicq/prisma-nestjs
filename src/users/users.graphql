@@ -1,0 +1,18 @@
+type User {
+  id: ID!
+  name: String
+  courses: [Course]
+}
+
+type Query {
+  user(id: ID!): User
+  getAllUsers: [User]
+}
+
+type Mutation {
+  createUser(data: UserCreateInput!): User
+}
+
+input UserCreateInput {
+  name: String!
+}

@@ -1,0 +1,30 @@
+type Course {
+  id: ID!
+  title: String
+}
+
+type Query {
+  getAllCourses: [Course]
+}
+
+type Mutation {
+  createCourse(data: CourseCreateInput!): Course
+}
+
+input UserCreateOneWithoutCoursesInput {
+  create: UserCreateWithoutCoursesInput
+  connect: UserWhereUniqueInput
+}
+
+input UserWhereUniqueInput {
+  id: ID
+}
+
+input UserCreateWithoutCoursesInput {
+  name: String!
+}
+
+input CourseCreateInput {
+  title: String!
+  owner: UserCreateOneWithoutCoursesInput!
+}
