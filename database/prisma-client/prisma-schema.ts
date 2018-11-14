@@ -80,6 +80,10 @@ input CourseUpdateInput {
   owner: UserUpdateOneRequiredWithoutCoursesInput
 }
 
+input CourseUpdateManyMutationInput {
+  title: String
+}
+
 input CourseUpdateManyWithoutOwnerInput {
   create: [CourseCreateWithoutOwnerInput!]
   delete: [CourseWhereUniqueInput!]
@@ -148,13 +152,13 @@ scalar Long
 type Mutation {
   createCourse(data: CourseCreateInput!): Course!
   updateCourse(data: CourseUpdateInput!, where: CourseWhereUniqueInput!): Course
-  updateManyCourses(data: CourseUpdateInput!, where: CourseWhereInput): BatchPayload!
+  updateManyCourses(data: CourseUpdateManyMutationInput!, where: CourseWhereInput): BatchPayload!
   upsertCourse(where: CourseWhereUniqueInput!, create: CourseCreateInput!, update: CourseUpdateInput!): Course!
   deleteCourse(where: CourseWhereUniqueInput!): Course
   deleteManyCourses(where: CourseWhereInput): BatchPayload!
   createUser(data: UserCreateInput!): User!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
-  updateManyUsers(data: UserUpdateInput!, where: UserWhereInput): BatchPayload!
+  updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
   deleteUser(where: UserWhereUniqueInput!): User
   deleteManyUsers(where: UserWhereInput): BatchPayload!
@@ -260,6 +264,10 @@ input UserSubscriptionWhereInput {
 input UserUpdateInput {
   name: String
   courses: CourseUpdateManyWithoutOwnerInput
+}
+
+input UserUpdateManyMutationInput {
+  name: String
 }
 
 input UserUpdateOneRequiredWithoutCoursesInput {

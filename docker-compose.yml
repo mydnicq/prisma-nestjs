@@ -1,7 +1,7 @@
 version: '3.4'
 services:
   prisma:
-    image: prismagraphql/prisma:1.17
+    image: prismagraphql/prisma:1.20.5
     restart: always
     ports:
       - '4466:4466'
@@ -18,7 +18,7 @@ services:
             migrations: true
             database: nestPrismaDB
   postgres:
-    container_name: 'nest-prisma-db'
+    container_name: 'nest-prisma-db'p
     image: postgres:10.5-alpine
     command: postgres -c config_file=/etc/postgresql/postgresql.conf
     ports:
