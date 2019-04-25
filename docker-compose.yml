@@ -18,7 +18,7 @@ services:
             migrations: true
             database: nestPrismaDB
   postgres:
-    container_name: 'nest-prisma-db'p
+    container_name: 'nest-prisma-db'
     image: postgres:10.5-alpine
     command: postgres -c config_file=/etc/postgresql/postgresql.conf
     ports:
