@@ -6,6 +6,8 @@ import {
   Mutation,
   ResolveProperty,
   Parent,
+  Context,
+  Info,
 } from '@nestjs/graphql';
 import { UserCreateInput } from '../../database/prisma-client';
 import { PrismaService } from '../prisma/prisma.service';
@@ -20,8 +22,24 @@ export class UsersResolver {
   }
 
   @Query()
-  async getAllUsers() {
-    return await this.prismaService.prisma.users();
+  async getAllUsers(@Context() ctx, @Info() info) {
+    const { value, loc } = info.operation.name;
+    const { body } = loc.source;
+
+    const fragment = `
+    fragment A on B{
+      id name coursesd {
+        title
+      }
+    }`;
+
+    // const fragment = body
+    //   .replace(`query ${value}`, 'fragment A on B')
+    //   .replace(`${value} {`, '')
+    //   .replace(/}([^}]*)$/, '')
+    //   .trim();
+
+    return await this.prismaService.prisma.users().$fragment(fragment);
   }
 
   @Mutation()
@@ -29,8 +47,8 @@ export class UsersResolver {
     return await this.prismaService.prisma.createUser(data);
   }
 
-  @ResolveProperty()
-  async courses(@Parent() user) {
-    return await this.prismaService.prisma.user({ id: user.id }).courses();
-  }
+  // @ResolveProperty()
+  // async courses(@Parent() user, @Info() info) {
+  //   return await this.prismaService.prisma.user({ id: user.id }).courses();
+  // }
 }
